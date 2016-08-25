@@ -25,4 +25,18 @@ void bubble_sort (Iterator first, Iterator last) {
   }); 
 }
 
+struct bubble_sort_fn {
+
+  template <class Iterator, class Compare>
+  void operator() (Iterator first, Iterator last, Compare const & comp) {
+    bubble_sort(first, last, comp);
+  }
+
+  template <class Iterator>
+  void operator() (Iterator first, Iterator last) {
+    bubble_sort(first, last);
+  }
+
+};
+
 }}
