@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.7)
 
-project(cppalgo CXX)
+project(cxxalgo CXX)
 
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic")
 set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0 -pg")
