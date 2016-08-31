@@ -12,7 +12,8 @@ ExternalProject_Add(
     )
 
 ExternalProject_Get_Property(GoogleTest source_dir)
-include_directories(${source_dir}/include)
+
+include_directories(${source_dir}/googletest/include)
 
 ExternalProject_Get_Property(GoogleTest binary_dir)
 add_library(gtest STATIC IMPORTED)
