@@ -20,7 +20,6 @@ if(NOT without-test)
     target_link_libraries(${test_name}-test gtest gtest_main pthread util)
     add_test(NAME ${test_name}
       COMMAND $<TARGET_FILE:${test_name}-test> "--gtest_output=xml:${test_name}-gtest.xml"
-      COMMAND echo "##teamcity[importData type='gtest' path='${test_name}-gtest.xml']"
     )
     set_property(TEST ${test_name} PROPERTY LABELS ${test_name})
   endfunction(add_google_test)
