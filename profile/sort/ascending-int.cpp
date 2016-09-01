@@ -3,6 +3,7 @@
 #include <cxxalgo/sort/bubble_sort.hpp>
 
 #include <algorithm>
+#include <chrono>
 #include <random>
 #include <vector>
 
@@ -19,11 +20,15 @@ void ascending_int (benchmark::State & state) {
       v[i] =i;
     }
     std::shuffle(v.begin(), v.end(), device);
-  
+
+    auto start = std::chrono::high_resolution_clock::now();
     T()(v.begin(), v.end());
+    auto end = std::chrono::high_resolution_clock::now();
+
+    state.SetIterationTime(std::chrono::duration_cast<std::chrono::duration<double>>(end - start).count());
   }
 }
 
-BENCHMARK_TEMPLATE(ascending_int, cxxalgo::sort::bubble_sort_fn)->Range(1 << 0, 1 << 10);
+BENCHMARK_TEMPLATE(ascending_int, cxxalgo::sort::bubble_sort_fn)->DenseRange(1, 512, 32)->Range(1 << 11, 1 << 14)->UseManualTime();
 
 BENCHMARK_MAIN()
