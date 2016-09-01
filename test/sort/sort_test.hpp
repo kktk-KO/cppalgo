@@ -22,4 +22,19 @@ TYPED_TEST_P(SortTest, AscendingInt) {
   }
 }
 
-REGISTER_TYPED_TEST_CASE_P(SortTest, AscendingInt);
+TYPED_TEST_P(SortTest, DescendingInt) {
+  std::array<int, 7> data{3, 1, 4, 1, 5, 9, 2};
+
+  using sort_function_fn = TypeParam;
+  sort_function_fn()(data.begin(), data.end(), [] (int a, int b) { return a > b; });
+
+  for (std::size_t i = 1; i < data.size(); ++i) {
+    EXPECT_GE(data[i - 1], data[i]);
+  }
+}
+
+REGISTER_TYPED_TEST_CASE_P(
+  SortTest,
+  AscendingInt,
+  DescendingInt
+);
