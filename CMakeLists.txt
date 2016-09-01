@@ -3,8 +3,9 @@ cmake_minimum_required(VERSION 2.7)
 project(cxxalgo CXX)
 
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic")
-set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0 -pg")
+set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0 -pg -fprofile-arcs -ftest-coverage")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2 -s -DNDEBUG -march=native")
+set(PROJECT_TEST_NAME ctest)
 
 include_directories(include)
 
@@ -22,4 +23,12 @@ if(NOT without-test)
   endfunction(add_google_test)
 
   add_subdirectory(test)
+endif()
+
+## coverage
+
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+if(CMAKE_COMPILER_IS_GNUCXX AND (CMAKE_BUILD_TYPE STREQUAL "Debug"))
+    include(CodeCoverage)
+    setup_target_for_coverage(coverage ${PROJECT_TEST_NAME} coverage)
 endif()
