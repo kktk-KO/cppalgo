@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace cxxalgro { namespace sort {
+namespace cxxalgo { namespace sort {
 
 template <class Iterator, class Compare>
 void odd_even_sort (Iterator first, Iterator last, Compare const & comp) {
@@ -12,13 +12,13 @@ void odd_even_sort (Iterator first, Iterator last, Compare const & comp) {
   while (flag) {
     flag = false;
     for (decltype(size) i = 0; i < size - 1; i += 2) {
-      if (!comp(first[i], first[i + 1])) {
+      if (comp(first[i + 1], first[i])) {
         std::swap(first[i], first[i + 1]);
         flag = true;
       }
     }
     for (decltype(size) i = 1; i < size - 1; i += 2) {
-      if (!comp(first[i], first[i + 1])) {
+      if (comp(first[i + 1], first[i])) {
         std::swap(first[i], first[i + 1]);
         flag = true;
       }
@@ -33,5 +33,19 @@ void odd_even_sort (Iterator first, Iterator last) {
     return left < right;
   }); 
 }
+
+struct odd_even_sort_fn {
+
+  template <class Iterator, class Compare>
+  void operator() (Iterator first, Iterator last, Compare const & comp) {
+    odd_even_sort(first, last, comp);
+  }
+
+  template <class Iterator>
+  void operator() (Iterator first, Iterator last) {
+    odd_even_sort(first, last);
+  }
+
+};
 
 }}

@@ -9,23 +9,40 @@ set(PROJECT_TEST_NAME ctest)
 
 include_directories(include)
 
-## test
+# used in unittest and profile.
+include(cmake/gtest.cmake)
 
-if(NOT without-test)
-  enable_testing()
-  include(cmake/gtest.cmake)
+## unittest
 
-  function(add_google_test test_name source)
-    add_executable(${test_name}-test ${source})
-    target_link_libraries(${test_name}-test gtest gtest_main pthread util)
-    add_test(NAME ${test_name}
-      COMMAND $<TARGET_FILE:${test_name}-test> "--gtest_output=xml:${test_name}-gtest.xml"
-    )
-    set_property(TEST ${test_name} PROPERTY LABELS ${test_name})
-  endfunction(add_google_test)
+add_custom_target(unittest)
 
-  add_subdirectory(test)
-endif()
+function(add_unittest test_name source)
+  add_executable(${test_name}-test EXCLUDE_FROM_ALL ${source})
+  target_link_libraries(${test_name}-test gtest gtest_main pthread util)
+
+  add_custom_target(${test_name}-test-exec COMMAND $<TARGET_FILE:${test_name}-test> "--gtest_output=xml:${test_name}-unittest.xml")
+
+  add_dependencies(unittest ${test_name}-test-exec)
+  add_dependencies(${test_name}-test-exec ${test_name}-test)
+endfunction(add_unittest)
+
+add_subdirectory(test)
+
+## profile
+
+add_custom_target(profile)
+
+function(add_profile profile_name source)
+  add_executable(${profile_name}-profile EXCLUDE_FROM_ALL ${source})
+  target_link_libraries(${profile_name}-profile gtest gtest_main pthread util)
+
+  add_custom_target(${profile_name}-profile-exec COMMAND $<TARGET_FILE:${profile_name}-profile> "--gtest_output=xml:${profile_name}-profile.xml")
+
+  add_dependencies(profile ${profile_name}-profile-exec)
+  add_dependencies(${profile_name}-profile-exec ${profile_name}-profile)
+endfunction(add_profile)
+
+add_subdirectory(profile)
 
 ## coverage
 

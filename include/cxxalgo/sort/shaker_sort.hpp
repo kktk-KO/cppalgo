@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace cxxalgro { namespace sort {
+namespace cxxalgo { namespace sort {
 
 template <class Iterator, class Compare>
 void shaker_sort (Iterator first, Iterator last, Compare const & comp) {
@@ -41,5 +41,19 @@ void shaker_sort (Iterator first, Iterator last) {
     return left < right;
   }); 
 }
+
+struct shaker_sort_fn {
+
+  template <class Iterator, class Compare>
+  void operator() (Iterator first, Iterator last, Compare const & comp) {
+    shaker_sort(first, last, comp);
+  }
+
+  template <class Iterator>
+  void operator() (Iterator first, Iterator last) {
+    shaker_sort(first, last);
+  }
+
+};
 
 }}

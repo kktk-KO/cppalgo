@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace cxxalgro { namespace sort {
+namespace cxxalgo { namespace sort {
 
 template <class Iterator, class Compare>
 void comb_sort (Iterator first, Iterator last, Compare const & comp) {
@@ -13,16 +13,15 @@ void comb_sort (Iterator first, Iterator last, Compare const & comp) {
   while (flag) {
     flag = false;
     for (decltype(size) i = 0; i < size - h; ++i) {
-      if (!comp(first[i], first[i + h])) {
+      if (comp(first[i + h], first[i])) {
         std::swap(first[i], first[i + h]);
         flag = true;
       }
     }
     if (h != 1) {
       flag = true;
-      h = h * 10 / 13;
+      h = std::max(decltype(size)(1), h * 10 / 13);
     }
-    
   }
 }
 
@@ -33,5 +32,19 @@ void comb_sort (Iterator first, Iterator last) {
     return left < right;
   }); 
 }
+
+struct comb_sort_fn {
+
+  template <class Iterator, class Compare>
+  void operator() (Iterator first, Iterator last, Compare const & comp) {
+    comb_sort(first, last, comp);
+  }
+
+  template <class Iterator>
+  void operator() (Iterator first, Iterator last) {
+    comb_sort(first, last);
+  }
+
+};
 
 }}

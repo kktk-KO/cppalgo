@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace cxxalgro { namespace sort {
+namespace cxxalgo { namespace sort {
 
 template <class Iterator, class Compare>
 void merge_sort (Iterator first, Iterator last, Compare const & comp) {
@@ -24,5 +24,19 @@ void merge_sort (Iterator first, Iterator last) {
     return left < right;
   }); 
 }
+
+struct merge_sort_fn {
+
+  template <class Iterator, class Compare>
+  void operator() (Iterator first, Iterator last, Compare const & comp) {
+    merge_sort(first, last, comp);
+  }
+
+  template <class Iterator>
+  void operator() (Iterator first, Iterator last) {
+    merge_sort(first, last);
+  }
+
+};
 
 }}

@@ -1,3 +1,10 @@
 cmake_minimum_required(VERSION 2.7)
 
-add_google_test(bubble-sort bubble_sort.cpp)
+# add_unittest(bogo-sort bogo_sort.cpp)
+add_unittest(bubble-sort bubble_sort.cpp)
+add_unittest(comb-sort comb_sort.cpp)
+add_unittest(gnome-sort gnome_sort.cpp)
+add_unittest(merge-sort merge_sort.cpp)
+add_unittest(odd_even-sort odd_even_sort.cpp)
+add_unittest(quick-sort quick_sort.cpp)
+add_unittest(shaker-sort shaker_sort.cpp)
