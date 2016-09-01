@@ -11,5 +11,6 @@ include_directories(include)
 
 # used in unittest and profile.
 include(cmake/gtest.cmake)
+include(cmake/benchmark.cmake)
 include(cmake/unittest.cmake)
 include(cmake/profile.cmake)
