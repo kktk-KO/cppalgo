@@ -7,7 +7,7 @@ function(add_profile profile_name source)
   target_link_libraries(${profile_name}-profile benchmark pthread)
 
   add_custom_target(${profile_name}-profile-exec
-    COMMAND $<TARGET_FILE:${profile_name}-profile> "--benchmark_out=${profile_name}-profile-raw.csv" "--benchmark_out_format=csv"
+    COMMAND $<TARGET_FILE:${profile_name}-profile> "--benchmark_out=${profile_name}-profile.csv" "--benchmark_out_format=csv"
   )
 
   add_custom_target(${profile_name}-profile-extract

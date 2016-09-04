@@ -9,7 +9,7 @@ ExternalProject_Add(
   PREFIX ${CMAKE_CURRENT_BINARY_DIR}/lib
   INSTALL_COMMAND ""
   LOG_DOWNLOAD ON
-  CMAKE_ARGS "-DCMAKE_BUILD_TYPE=release" "-DBENCHMARK_ENABLE_LTO=true"
+  CMAKE_ARGS "-DCMAKE_BUILD_TYPE=release" "-DBENCHMARK_ENABLE_LTO=true" "-DCMAKE_CXX_FLAGS='-Wno-error=unused-function'"
 )
 
 ExternalProject_Get_Property(GoogleBenchmark source_dir)
